@@ -1,3 +1,4 @@
+import time
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
@@ -13,15 +14,18 @@ MY_EMAIL = os.getenv("MY_EMAIL")
 MY_PASSWORD = os.getenv("MY_PASSWORD")
 PASSWORD_FO_LOG_IN = os.getenv("PASSWORD_FO_LOG_IN")
 
-URL = "https://djinni.co/my/dashboard/"
+URL_DJINI = "https://djinni.co/my/dashboard/"
+URL_DOU = "https://dou.ua/"
 
 options = Options()
 options.add_experimental_option("detach", True)
 
 driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()),
                           options=options)
+
+## --------------------------------------------------DJINI--------------------------------------------#
 try:
-    driver.get(URL)
+    driver.get(URL_DJINI)
     driver.maximize_window()
 
     email_inp = driver.find_element(By.XPATH, '//*[@id="email"]')
@@ -61,10 +65,46 @@ except Exception as ex:
     print(ex)
 
 
-title_info = f"Summary of the week(QA Manual)\n\n" \
-body_info = f"Job Prepositions: {job},\n\n Responses: {responses},\n\n Candidates: {candidates},\n\n Salary: {sal}\n\n"
-footer_info = f"You can find this project here 'https://github.com/dimakohanskyi'"
-all_info = f"{title_info} {body_info} {footer_info}"
+###--------------------------------------- DOU-------------------------------------#
+
+try:
+    driver.get(URL_DOU)
+    driver.maximize_window()
+
+    dou_salary = driver.find_element(By.XPATH, '/html/body/div/header/ul/li[5]/a')
+    dou_salary.click()
+
+    drop_down_joblist = driver.find_element(By.XPATH, '//*[@id="dd-position"]/div[1]')
+    drop_down_joblist.click()
+
+    qa_dropdown = driver.find_element(By.XPATH, '//*[@id="dd-position"]/div[2]/div[2]/div[2]/div[2]')
+    qa_dropdown.click()
+
+    time.sleep(3)
+    sal_start = driver.find_element(By.XPATH, '//*[@id="q1"]/div/span[2]').text
+
+    sal_medium = driver.find_element(By.XPATH, '//*[@id="median"]/div/span[2]').text
+
+    salary_from_dou = f"Dou: {sal_start}$-{sal_medium}$\n\n"
+
+except Exception as ex:
+    print(ex)
+
+#----------------------------------------------------------------------------------#
+
+
+SUBJECT = f"Summary of the week(QA Manual)\n\n" \
+
+body_info = f"Job Prepositions: {job},\n\n Responses: {responses},\n\n Candidates: {candidates},\n\n"
+
+salary_from_djini = f"Djini: {sal}"
+
+difference_of_salary = f"General salary statistics: {salary_from_djini} -- {salary_from_dou}"
+
+footer_info = f"You can find this project here 'https://github.com/dimakohanskyi/Djini-Selenium'"
+
+all_info = f"{SUBJECT} {body_info} {difference_of_salary} {footer_info}"
+
 message_bytes = all_info.encode('utf-8')
 
 try:
