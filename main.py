@@ -12,7 +12,6 @@ import os
 from email.mime.multipart import MIMEMultipart   ## клас дозволяє прикріпляти до повідомлення текст фото чи html
 from email.mime.image import MIMEImage
 from email.mime.text import MIMEText
-import html
 
 
 load_dotenv()
