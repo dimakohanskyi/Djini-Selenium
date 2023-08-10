@@ -1,4 +1,6 @@
 import time
+from tkinter import font
+
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
@@ -7,6 +9,11 @@ from selenium.webdriver.common.by import By
 import smtplib
 from dotenv import load_dotenv
 import os
+from email.mime.multipart import MIMEMultipart   ## клас дозволяє прикріпляти до повідомлення текст фото чи html
+from email.mime.image import MIMEImage
+from email.mime.text import MIMEText
+import html
+
 
 load_dotenv()
 
@@ -61,6 +68,8 @@ try:
     salary = driver.find_element(By.XPATH, '/html/body/div[1]/div[2]/div/div/div/div/div[1]/div/div[1]/div[2]/div[2]/div[1]')
     sal = salary.text
 
+    salary_from_djini = f"Djini: {sal}"
+
 except Exception as ex:
     print(ex)
 
@@ -90,33 +99,69 @@ try:
 except Exception as ex:
     print(ex)
 
-#----------------------------------------------------------------------------------#
+#-------------------------------MSG Elements--------------------------------------------------#
 
 
 SUBJECT = f"Summary of the week(QA Manual)\n\n" \
 
-body_info = f"Job Prepositions: {job},\n\n Responses: {responses},\n\n Candidates: {candidates},\n\n"
-
-salary_from_djini = f"Djini: {sal}"
+body_job_info = f"Job Prepositions: {job}"
+body_responses_info = f"Responses: {responses}"
+body_candidates_info = f"Candidates: {candidates}"
 
 difference_of_salary = f"General salary statistics: {salary_from_djini} -- {salary_from_dou}"
 
-footer_info = f"You can find this project here 'https://github.com/dimakohanskyi/Djini-Selenium'"
+with open("image.jpg", "rb") as image_file:
+    image_data = image_file.read()
+    image_part = MIMEImage(image_data, name="image.jpg")
 
-all_info = f"{SUBJECT} {body_info} {difference_of_salary} {footer_info}"
 
-message_bytes = all_info.encode('utf-8')
+#---------------------------------------------------------------------------------------------------#
+
+
+# Create a MIME object
+message = MIMEMultipart()
+message["From"] = MY_EMAIL
+message["To"] = MY_EMAIL
+message["Subject"] = SUBJECT
+message.attach(image_part)
+
+#----------------------------------------------------------------------------------------------------#
+html_content = f"""
+<html>
+<head>
+
+</head>
+<body style="font-family: Georgia, serif;">
+    <p>{body_job_info}</p>
+    <p>{body_responses_info}</p>
+    <p>{body_candidates_info}</p>
+    <p>{difference_of_salary}</p>
+    <p><a href="https://www.instagram.com/dima_kohanskyi/">&#10071;My Contacts&#10071;</a></p>
+    <p><a href="https://github.com/dimakohanskyi/Djini-Selenium">&#10069;Git-Hub&#10069;</a></p>
+
+</body>
+</html>
+"""
+
+#----------------------------------------------------------------------------------------------------#
+
+
+html_part = MIMEText(html_content, "html")
+message.attach(html_part)
 
 try:
     with smtplib.SMTP("smtp.gmail.com") as connection:
         connection.starttls()
         connection.login(MY_EMAIL, MY_PASSWORD)
-        connection.sendmail(
-            from_addr=MY_EMAIL,
-            to_addrs=MY_EMAIL,
-            msg=all_info
-        )
+        msg = MIMEMultipart()
+        connection.sendmail(MY_EMAIL, MY_EMAIL, message.as_string())
+
+
+
 except Exception as ex:
     print(ex)
+
+
+
 
 
