@@ -1,6 +1,5 @@
 import time
 from tkinter import font
-
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
@@ -72,7 +71,6 @@ try:
 except Exception as ex:
     print(ex)
 
-
 ###--------------------------------------- DOU-------------------------------------#
 
 try:
@@ -100,22 +98,18 @@ except Exception as ex:
 
 #-------------------------------MSG Elements--------------------------------------------------#
 
-
 SUBJECT = f"Summary of the week(QA Manual)\n\n" \
 
 body_job_info = f"Job Prepositions: {job}"
 body_responses_info = f"Responses: {responses}"
 body_candidates_info = f"Candidates: {candidates}"
-
 difference_of_salary = f"General salary statistics: {salary_from_djini} -- {salary_from_dou}"
 
 with open("image.jpg", "rb") as image_file:
     image_data = image_file.read()
     image_part = MIMEImage(image_data, name="image.jpg")
 
-
 #---------------------------------------------------------------------------------------------------#
-
 
 # Create a MIME object
 message = MIMEMultipart()
@@ -141,9 +135,7 @@ html_content = f"""
 </body>
 </html>
 """
-
 #----------------------------------------------------------------------------------------------------#
-
 
 html_part = MIMEText(html_content, "html")
 message.attach(html_part)
@@ -154,8 +146,6 @@ try:
         connection.login(MY_EMAIL, MY_PASSWORD)
         msg = MIMEMultipart()
         connection.sendmail(MY_EMAIL, MY_EMAIL, message.as_string())
-
-
 
 except Exception as ex:
     print(ex)
