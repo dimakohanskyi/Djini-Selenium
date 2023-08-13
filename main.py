@@ -89,9 +89,10 @@ try:
     time.sleep(3)
     sal_start = driver.find_element(By.XPATH, '//*[@id="q1"]/div/span[2]').text
 
-    sal_medium = driver.find_element(By.XPATH, '//*[@id="median"]/div/span[2]').text
+    sal_max = driver.find_element(By.XPATH, '//*[@id="q3"]/div/span[2]').text
 
-    salary_from_dou = f"Dou: {sal_start}$-{sal_medium}$\n\n"
+    sal_medium_dou = (int(sal_start) + int(sal_max)) / 2
+    salary_from_dou = f"Dou: {sal_medium_dou}$\n\n"
 
 except Exception as ex:
     print(ex)
