@@ -23,7 +23,9 @@ PASSWORD_FO_LOG_IN = os.getenv("PASSWORD_FO_LOG_IN")
 
 URL_DJINNI = "https://djinni.co/my/dashboard/"
 URL_DOU = "https://dou.ua/"
+
 current_date = datetime.now().date()
+weekday = current_date.weekday()
 
 
 options = Options()
@@ -178,7 +180,7 @@ try:
     )""")
 
     c.execute(f"INSERT INTO salary_qa_djinni(salary_start_qa, salary_max_qa, timestamp) VALUES(?, ?, ?)",
-                             (salary_start_qa_djinni_without_dollar,  salary_max_qa_djinni_without_dollar, current_date))
+                             (salary_start_qa_djinni_without_dollar, salary_max_qa_djinni_without_dollar, current_date))
 
     db_qa_dou.commit()
 
@@ -231,9 +233,7 @@ try:
 except Exception as ex:
     print(ex)
 
-
-
-#--------------------------------------------FIND ALL ELEMENTS FROM DATABASE-------------------------------------#'
+#--------------------------------------------FIND ALL ELEMENTS FROM DATABASE-------------------------------------#
 
 with sqlite3.connect("db/salary_qa_djinni_database.db") as db_qa_dou:
     cursor = db_qa_dou.cursor()
@@ -283,8 +283,7 @@ with sqlite3.connect("db/salary_python_dou_database.db") as db_py_dou:
     msg_py_max_dou = request_py_max_dou[0]
 
 
-
-# # #-------------------------------MSG Elements--------------------------------------------------#
+# # #-------------------------------Create MSG Elements--------------------------------------------------#
 
 SUBJECT = f"Summary of the week(QA Manual / Python Dev)\n\n" \
 
@@ -300,52 +299,60 @@ summary_salary_python_dev_dou = (f"General salary statistics for Python Dev(Dou)
                               f" ${msg_py_start_dou} -- ${msg_py_max_dou}")
 summary_salary_python_dev_djinni = f"General salary statistics for Python Dev(Djinni): ${msg_py_start_djinni} -- ${msg_py_max_djinni}"
 
-
 with open("images_result_and_motivation_card/image.jpg", "rb") as image_file:
      image_data = image_file.read()
      image_part = MIMEImage(image_data, name="image.jpg")
 
+#---------------------------------------------SEND EMAIL ON MONDAYS-------------------------------------#
+
+if weekday == 1:
+
+    message = MIMEMultipart()
+    message["From"] = MY_EMAIL
+    message["To"] = MY_EMAIL
+    message["Subject"] = SUBJECT
+    message.attach(image_part)
+
+    #-------------------------------------------------HTML----------------------------------------#
+
+    html_content = f"""
+    <html>
+    <head>
+    
+    </head>
+    <body style="font-family: Georgia, serif;">
+         <p>{body_job_info}</p>
+         <p>{body_responses_info}</p>
+         <p>{body_candidates_info}</p>
+         <p>{salary_for_qa_dou}<br>{salary_for_qa_djinni}</p>
+         <p>-------------------------------------------------------------------------------</p>
+         <p>{summary_salary_python_dev_dou}<br>{summary_salary_python_dev_djinni}</p>
+         <p><a href="https://www.instagram.com/dima_kohanskyi/">&#10071;My Contacts&#10071;</a></p>
+         <p><a href="https://github.com/dimakohanskyi/Djini-Selenium">&#10069;Git-Hub&#10069;</a></p>
+         <p><a href="https://t.me/dimakohanskyi">&#10071;Telegram Python&#10071;</p>
+     </body>
+    </html>
+    """
+    #----------------------------------------------------------------------------------------------------#
+
+    html_part = MIMEText(html_content, "html")
+    message.attach(html_part)
+
+    try:
+        with smtplib.SMTP("smtp.gmail.com") as connection:
+            connection.starttls()
+            connection.login(MY_EMAIL, MY_PASSWORD)
+            msg = MIMEMultipart()
+            connection.sendmail(MY_EMAIL, MY_EMAIL, message.as_string())
+
+    except Exception as ex:
+        print(ex)
 
 
-message = MIMEMultipart()
-message["From"] = MY_EMAIL
-message["To"] = MY_EMAIL
-message["Subject"] = SUBJECT
-message.attach(image_part)
 
-# # #----------------------------------------------------------------------------------------------------#
 
-html_content = f"""
-<html>
-<head>
 
-</head>
-<body style="font-family: Georgia, serif;">
-     <p>{body_job_info}</p>
-     <p>{body_responses_info}</p>
-     <p>{body_candidates_info}</p>
-     <p>{salary_for_qa_dou}<br>{salary_for_qa_djinni}</p>
-     <p>-------------------------------------------------------------------------------</p>
-     <p>{summary_salary_python_dev_dou}<br>{summary_salary_python_dev_djinni}</p>
-     <p><a href="https://www.instagram.com/dima_kohanskyi/">&#10071;My Contacts&#10071;</a></p>
-     <p><a href="https://github.com/dimakohanskyi/Djini-Selenium">&#10069;Git-Hub&#10069;</a></p>
-     <p><a href="https://t.me/dimakohanskyi">&#10071;Telegram Python&#10071;</p>
- </body>
-</html>
-"""
 
-#----------------------------------------------------------------------------------------------------#
 
-html_part = MIMEText(html_content, "html")
-message.attach(html_part)
 
-try:
-    with smtplib.SMTP("smtp.gmail.com") as connection:
-        connection.starttls()
-        connection.login(MY_EMAIL, MY_PASSWORD)
-        msg = MIMEMultipart()
-        connection.sendmail(MY_EMAIL, MY_EMAIL, message.as_string())
-
-except Exception as ex:
-    print(ex)
 
