@@ -41,3 +41,16 @@ for example, the entire list of vacancies, etc</li>
 
 
 
+<h3>Changes</h3>
+In the last version my script couldn't save any data from Djinni and Dou.
+So I changed this and now it supports sqlite3 and each time when I run my code, all salary statistics 
+save in tables. I create 4 tables which consist salary statistics:
+1) salary_qa_djinni
+2) salary_qa_dou
+3) salary_python_djinni
+4) salary_python_dou
+
+Also I add function which send email (with salary statistics) each Monday.
+
+
+
