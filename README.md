@@ -53,7 +53,8 @@ save in tables. I created 4 tables which consist salary statistics:
 <li>salary_python_dou</li>
 
 </ul>
+<p>
 Also I add function which send email (with salary statistics) each Monday.
-
+</p>
 
 
