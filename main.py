@@ -13,7 +13,7 @@ import os
 import sqlite3
 from datetime import datetime
 
-#---------------------------------------------------OPTIONS-----------------------------------------------#
+# ---------------------------------------------------OPTIONS-----------------------------------------------#
 
 load_dotenv()
 
@@ -26,7 +26,6 @@ URL_DOU = "https://dou.ua/"
 
 current_date = datetime.now().date()
 weekday = current_date.weekday()
-
 
 options = Options()
 options.add_experimental_option("detach", True)
@@ -74,7 +73,7 @@ try:
     responses_amount_djinni_for_qa = amount_of_responses.text
 
     amount_of_candidates_qa = driver.find_element(By.XPATH,
-                                               '/html/body/div[1]/div[2]/div/div/div/div/div[1]/div/div[2]/div[2]/div[1]/div[1]')
+                                                  '/html/body/div[1]/div[2]/div/div/div/div/div[1]/div/div[2]/div[2]/div[1]/div[1]')
     candidates_amount_djinni_qa = amount_of_candidates_qa.text
 
     salary = driver.find_element(By.XPATH,
@@ -99,13 +98,15 @@ try:
     driver.get("https://djinni.co/salaries/")
 
     python_developer_button_djinni = driver.find_element(By.XPATH,
-                                                  '/html/body/div[1]/div[2]/div/div/div/div/div[6]/div/div[1]/div[2]/a[32]')
+                                                         '/html/body/div[1]/div[2]/div/div/div/div/div[6]/div/div[1]/div[2]/a[32]')
     python_developer_button_djinni.click()
 
-    experience_button_python_djinni = driver.find_element(By.XPATH, '/html/body/div[1]/div[2]/div/div/div/div/div[6]/div/div[2]/div[2]/a[3]')
+    experience_button_python_djinni = driver.find_element(By.XPATH,
+                                                          '/html/body/div[1]/div[2]/div/div/div/div/div[6]/div/div[2]/div[2]/a[3]')
     experience_button_python_djinni.click()
 
-    english_level_python_djinni = driver.find_element(By.XPATH, '/html/body/div[1]/div[2]/div/div/div/div/div[6]/div/div[3]/div[2]/a[5]')
+    english_level_python_djinni = driver.find_element(By.XPATH,
+                                                      '/html/body/div[1]/div[2]/div/div/div/div/div[6]/div/div[3]/div[2]/a[5]')
     english_level_python_djinni.click()
 
     salary_for_python_djinni = driver.find_element(By.XPATH,
@@ -144,7 +145,7 @@ try:
 except Exception as ex:
     print(ex)
 
-#------------------------------------------------Python Dou-----------------------------------------------------#
+# ------------------------------------------------Python Dou-----------------------------------------------------#
 
 try:
     driver.get("https://jobs.dou.ua/salaries/?period=2023-06&position=Middle%20SE")
@@ -166,7 +167,7 @@ try:
 except Exception as ex:
     print(ex)
 
-#----------------------------------------------Creating Databases---------------------------------------#
+# ----------------------------------------------Creating Databases---------------------------------------#
 
 try:
 
@@ -180,12 +181,11 @@ try:
     )""")
 
     c.execute(f"INSERT INTO salary_qa_djinni(salary_start_qa, salary_max_qa, timestamp) VALUES(?, ?, ?)",
-                             (salary_start_qa_djinni_without_dollar, salary_max_qa_djinni_without_dollar, current_date))
+              (salary_start_qa_djinni_without_dollar, salary_max_qa_djinni_without_dollar, current_date))
 
     db_qa_dou.commit()
 
-
-    db_py_dou =  sqlite3.connect("db/salary_python_djinni_database.db")
+    db_py_dou = sqlite3.connect("db/salary_python_djinni_database.db")
     c = db_py_dou.cursor()
     c.execute(""" CREATE TABLE IF NOT EXISTS salary_python_djinni (
                 id INTEGER PRIMARY KEY,
@@ -195,10 +195,9 @@ try:
     )
     """)
     c.execute(f"INSERT INTO salary_python_djinni(salary_start_py, salary_max_py, timestamp) VALUES(?, ?, ?)",
-                (salary_start_python_djinni_without_dollar, salary_max_python_djinni_without_dollar, current_date))
+              (salary_start_python_djinni_without_dollar, salary_max_python_djinni_without_dollar, current_date))
 
     db_py_dou.commit()
-
 
     db_qa_dou = sqlite3.connect("db/salary_qa_dou_database.db")
     c = db_qa_dou.cursor()
@@ -210,10 +209,9 @@ try:
     )""")
 
     c.execute(f"INSERT INTO salary_qa_dou(salary_start_qa, salary_max_qa, timestamp) VALUES(?, ?, ?)",
-                (sal_start_qa_dou, sal_max_qa_dou, current_date))
+              (sal_start_qa_dou, sal_max_qa_dou, current_date))
 
     db_qa_dou.commit()
-
 
     db_py_dou = sqlite3.connect("db/salary_python_dou_database.db")
     c = db_py_dou.cursor()
@@ -226,14 +224,14 @@ try:
     """)
 
     c.execute(f"INSERT INTO salary_python_dou(salary_start_py, salary_max_py, timestamp) VALUES(?, ?, ?)",
-                (python_dev_salary_start_dou, python_dev_salary_max_dou, current_date))
+              (python_dev_salary_start_dou, python_dev_salary_max_dou, current_date))
 
     db_py_dou.commit()
 
 except Exception as ex:
     print(ex)
 
-#--------------------------------------------FIND ALL ELEMENTS FROM DATABASE-------------------------------------#
+# --------------------------------------------FIND ALL ELEMENTS FROM DATABASE-------------------------------------#
 
 with sqlite3.connect("db/salary_qa_djinni_database.db") as db_qa_dou:
     cursor = db_qa_dou.cursor()
@@ -246,7 +244,6 @@ with sqlite3.connect("db/salary_qa_djinni_database.db") as db_qa_dou:
     request_qa_max_djinni = cursor.fetchone()
     msg_qa_max_djinni = request_qa_max_djinni[0]
 
-
 with sqlite3.connect("db/salary_python_djinni_database.db") as db_py_djinni:
     cursor = db_py_djinni.cursor()
 
@@ -257,7 +254,6 @@ with sqlite3.connect("db/salary_python_djinni_database.db") as db_py_djinni:
     cursor.execute("SELECT salary_max_py FROM salary_python_djinni")
     request_py_max_djinni = cursor.fetchone()
     msg_py_max_djinni = request_py_max_djinni[0]
-
 
 with sqlite3.connect("db/salary_qa_dou_database.db") as db_qa_dou:
     cursor = db_qa_dou.cursor()
@@ -270,7 +266,6 @@ with sqlite3.connect("db/salary_qa_dou_database.db") as db_qa_dou:
     request_qa_max_dou = cursor.fetchone()
     msg_qa_max_dou = request_qa_max_dou[0]
 
-
 with sqlite3.connect("db/salary_python_dou_database.db") as db_py_dou:
     cursor = db_py_dou.cursor()
 
@@ -282,10 +277,9 @@ with sqlite3.connect("db/salary_python_dou_database.db") as db_py_dou:
     request_py_max_dou = cursor.fetchone()
     msg_py_max_dou = request_py_max_dou[0]
 
-
 # # #-------------------------------Create MSG Elements--------------------------------------------------#
 
-SUBJECT = f"Summary of the week(QA Manual / Python Dev)\n\n" \
+SUBJECT = f"Summary of the week(QA Manual / Python Dev)\n\n"
 
 body_job_info = f"Job Prepositions: {job_amount_djinni_statistic_for_qa}"
 body_responses_info = f"Responses: {responses_amount_djinni_for_qa}"
@@ -294,16 +288,15 @@ body_candidates_info = f"Candidates: {candidates_amount_djinni_qa}"
 salary_for_qa_djinni = f"General salary statistics for QA(Djinni): ${msg_qa_start_djinni} -- {msg_qa_max_djinni}"
 salary_for_qa_dou = f"General salary statistics for QA(Dou): ${msg_qa_start_dou} -- ${msg_qa_max_dou}"
 
-
 summary_salary_python_dev_dou = (f"General salary statistics for Python Dev(Dou):"
-                              f" ${msg_py_start_dou} -- ${msg_py_max_dou}")
+                                 f" ${msg_py_start_dou} -- ${msg_py_max_dou}")
 summary_salary_python_dev_djinni = f"General salary statistics for Python Dev(Djinni): ${msg_py_start_djinni} -- ${msg_py_max_djinni}"
 
 with open("images_result_and_motivation_card/image.jpg", "rb") as image_file:
-     image_data = image_file.read()
-     image_part = MIMEImage(image_data, name="image.jpg")
+    image_data = image_file.read()
+    image_part = MIMEImage(image_data, name="image.jpg")
 
-#---------------------------------------------SEND EMAIL ON MONDAYS-------------------------------------#
+# ---------------------------------------------SEND EMAIL ON MONDAYS-------------------------------------#
 
 if weekday == 1:
 
@@ -313,7 +306,7 @@ if weekday == 1:
     message["Subject"] = SUBJECT
     message.attach(image_part)
 
-    #-------------------------------------------------HTML----------------------------------------#
+    # -------------------------------------------------HTML----------------------------------------#
 
     html_content = f"""
     <html>
@@ -333,7 +326,7 @@ if weekday == 1:
      </body>
     </html>
     """
-    #----------------------------------------------------------------------------------------------------#
+    # ----------------------------------------------------------------------------------------------------#
 
     html_part = MIMEText(html_content, "html")
     message.attach(html_part)
@@ -347,12 +340,3 @@ if weekday == 1:
 
     except Exception as ex:
         print(ex)
-
-
-
-
-
-
-
-
-
