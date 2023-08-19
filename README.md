@@ -58,7 +58,7 @@ Also I add function which send email (with salary statistics) each Monday.<br>
 Today(19.08) I add telegram bot which can send statistics for you with using commands.<br>
 But I don't solve the problem how I can run my bot in main.py file <br>
 Also I find new issue in my code, the data from resources write in the last row in databases<br> 
-but I select first row from each table.<br>
+but I select first row from each table.   (DONE) <br>
 </p>
 
 

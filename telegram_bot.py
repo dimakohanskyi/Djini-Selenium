@@ -62,44 +62,44 @@ with sqlite3.connect("db/salary_qa_djinni_database.db") as db_qa_dou:
 
     cursor.execute("SELECT salary_start_qa FROM salary_qa_djinni")
     request_qa_start_djinni = cursor.fetchone()
-    msg_qa_start_djinni = request_qa_start_djinni[0]
+    msg_qa_start_djinni = request_qa_start_djinni[-1]
 
     cursor.execute("SELECT salary_max_qa FROM salary_qa_djinni")
     request_qa_max_djinni = cursor.fetchone()
-    msg_qa_max_djinni = request_qa_max_djinni[0]
+    msg_qa_max_djinni = request_qa_max_djinni[-1]
 
 with sqlite3.connect("db/salary_python_djinni_database.db") as db_py_djinni:
     cursor = db_py_djinni.cursor()
 
     cursor.execute("SELECT salary_start_py FROM salary_python_djinni")
     request_py_start_djinni = cursor.fetchone()
-    msg_py_start_djinni = request_py_start_djinni[0]
+    msg_py_start_djinni = request_py_start_djinni[-1]
 
     cursor.execute("SELECT salary_max_py FROM salary_python_djinni")
     request_py_max_djinni = cursor.fetchone()
-    msg_py_max_djinni = request_py_max_djinni[0]
+    msg_py_max_djinni = request_py_max_djinni[-1]
 
 with sqlite3.connect("db/salary_qa_dou_database.db") as db_qa_dou:
     cursor = db_qa_dou.cursor()
 
     cursor.execute("SELECT salary_start_qa FROM salary_qa_dou")
     request_qa_start_dou = cursor.fetchone()
-    msg_qa_start_dou = request_qa_start_dou[0]
+    msg_qa_start_dou = request_qa_start_dou[-1]
 
     cursor.execute("SELECT salary_max_qa FROM salary_qa_dou")
     request_qa_max_dou = cursor.fetchone()
-    msg_qa_max_dou = request_qa_max_dou[0]
+    msg_qa_max_dou = request_qa_max_dou[-1]
 
 with sqlite3.connect("db/salary_python_dou_database.db") as db_py_dou:
     cursor = db_py_dou.cursor()
 
     cursor.execute("SELECT salary_start_py FROM salary_python_dou")
     request_py_start_dou = cursor.fetchone()
-    msg_py_start_dou = request_py_start_dou[0]
+    msg_py_start_dou = request_py_start_dou[-1]
 
     cursor.execute("SELECT salary_max_py FROM salary_python_dou")
     request_py_max_dou = cursor.fetchone()
-    msg_py_max_dou = request_py_max_dou[0]
+    msg_py_max_dou = request_py_max_dou[-1]
 
 
 
