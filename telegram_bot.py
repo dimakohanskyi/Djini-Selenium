@@ -3,7 +3,6 @@ import logging
 import os
 from dotenv import load_dotenv
 import sqlite3
-import emoji
 
 load_dotenv()
 TOKEN = os.getenv("MY_API_TOKEN_TELEGRAM")
@@ -54,7 +53,6 @@ async def send_help(message: types.Message):
                         " \n ❕/salary_py_djinni❕ \n ❕/salary_py_dou❕")
 
 
-
 # --------------------------------------------FIND ALL ELEMENTS FROM DATABASE-------------------------------------#
 
 with sqlite3.connect("db/salary_qa_djinni_database.db") as db_qa_dou:
@@ -93,18 +91,14 @@ with sqlite3.connect("db/salary_qa_dou_database.db") as db_qa_dou:
 with sqlite3.connect("db/salary_python_dou_database.db") as db_py_dou:
     cursor = db_py_dou.cursor()
 
-    cursor.execute("SELECT salary_start_py FROM salary_python_dou")
+    cursor.execute("SELECT salary_start_py FROM salary_python_dou order by timestamp DESC limit 1")
     request_py_start_dou = cursor.fetchone()
-    msg_py_start_dou = request_py_start_dou[-1]
+    msg_py_start_dou = request_py_start_dou[0]
 
     cursor.execute("SELECT salary_max_py FROM salary_python_dou")
     request_py_max_dou = cursor.fetchone()
     msg_py_max_dou = request_py_max_dou[-1]
 
 
-
 if __name__ == '__main__':
     executor.start_polling(dp, skip_updates=True)
-
-
-
