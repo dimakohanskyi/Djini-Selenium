@@ -1,64 +1,37 @@
 <h3>------------------------Description---------------------</h3>
-<p>Using the modules which I described below,<br>
-I created a program that will help to get the<br>
-current information on the labor market for QA specialists.<br>
-And sends the edited version to the email</p>
-<br>
 
-
-<h3>This project can help you to get current information:</h3>
-<ul>
-    <li>How many offers have been placed on Djini this week</li>
-    <li>How many applicants on one position</li> 
-    <li>How many candidates with QA qualification</li>
-    <li>General salary statistics (Djini, Dou)</li>
-    <li>Link in this project</li> 
-</ul>
-
-<br>
-<h3>In this project I used such libraries as:</h3>
-<ul>
-    <li>Time</li> 
-    <li>Selenium</li>
-    <li>Web.driver</li>
-    <li>SmtpLib</li>
-    <li>dotenv</li>
-    <li>os</li>
-</ul>
-<br>
-
-<h3>The difficulties I faced:</h3>
-<ul>
-<li>I do not yet have good knowledge of the Selenium library and 
-use one of the many methods of parsing the site, namely by XPATH</li>
-
-<li>I faced into the problem of changing the value of progress-bar
-which resulted in inaccurate salary data from the site dou.ua</li>
-
-<li>The next problem is that I don't understand how you can pull,
-for example, the entire list of vacancies, etc</li>
-</ul>
-
-
-
-<h3>Changes:</h3>
-In the last version my script couldn't save any data from Djinni and Dou.<br>
-So I changed this and now it supports sqlite3.<br> Each time when I run my code, all salary statistics
-save in tables. I created 4 tables which consist salary statistics:
-<ul>
-
-<li>salary_qa_djinni</li>
-<li>salary_qa_dou</li>
-<li>salary_python_djinni</li>
-<li>salary_python_dou</li>
-
-</ul>
 <p>
-Also I add function which send email (with salary statistics) each Monday.<br>
-Today(19.08) I add telegram bot which can send statistics for you with using commands.<br>
-But I don't solve the problem how I can run my bot in main.py file <br>
-Also I find new issue in my code, the data from resources write in the last row in databases<br> 
-but I select first row from each table.   (DONE) <br>
+I created a program that will help to follow up the
+current information on the labor market for QA Engineers and Python Developers.
+This script take all data from different resources and add it to database.
+Every Mondays this code sends an email with current salary information,
+motivation card and all my contacts. I created another way of get 
+information, It's Telegram Bot. Which also take all current information from database
+and when a certain command is called, it sends the result into the chat.
+
 </p>
+<br>
+
+
+
+
+<h3>------------------------Installation----------------------</h3>
+
+<ol>
+<li>Clone the GitHub repository </li>
+<li>Install requirements from 'requirements.txt'</li>
+<li>Create .env file and add values to the variables:</li>
+"""
+MY_EMAIL="your email"<br>
+MY_PASSWORD="your email smpt password"<br>
+PASSWORD_FO_LOG_IN="your password for log into Djinni"<br>
+MY_API_TOKEN_TELEGRAM="your api telegram toke"<br>
+"""
+<li>Run the script in main.py</li>
+</ol>
+
+
+
+
 
 
