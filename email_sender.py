@@ -3,18 +3,14 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.image import MIMEImage
 from email.mime.text import MIMEText
 import os
-import sqlite3
 from datetime import datetime
 from find_all_elements import find_all_elements_for_qa_djinni
+from find_all_data_from_database import (find_data_for_qa_djinni, find_data_for_qa_dou,
+                                         find_data_for_py_djinni, find_data_for_py_dou)
 
 MY_EMAIL = os.getenv("MY_EMAIL")
 MY_PASSWORD = os.getenv("MY_PASSWORD")
 PASSWORD_FO_LOG_IN = os.getenv("PASSWORD_FO_LOG_IN")
-
-CONNECTION_DB_QA_DJINNI = "db/salary_qa_djinni_database.db"
-CONNECTION_DB_QA_DOU = "db/salary_qa_dou_database.db"
-CONNECTION_DB_PY_DJINNI = "db/salary_python_djinni_database.db"
-CONNECTION_DB_PY_DOU = "db/salary_python_dou_database.db"
 
 
 def email_message_sender():
@@ -22,49 +18,17 @@ def email_message_sender():
     current_date = datetime.now().date()
     weekday = current_date.weekday()
 
-    with sqlite3.connect('CONNECTION_DB_QA_DJINNI') as db_qa_dou:
-        cursor = db_qa_dou.cursor()
+    msg_qa_start_djinni = find_data_for_qa_djinni()[0]
+    msg_qa_max_djinni = find_data_for_qa_djinni()[1]
 
-        cursor.execute("SELECT salary_start_qa FROM salary_qa_djinni")
-        request_qa_start_djinni = cursor.fetchone()
-        msg_qa_start_djinni = request_qa_start_djinni[-1]
+    msg_qa_start_dou = find_data_for_qa_dou()[0]
+    msg_qa_max_dou = find_data_for_qa_dou()[1]
 
-        cursor.execute("SELECT salary_max_qa FROM salary_qa_djinni")
-        request_qa_max_djinni = cursor.fetchone()
-        msg_qa_max_djinni = request_qa_max_djinni[-1]
+    msg_py_start_djinni = find_data_for_py_djinni()[0]
+    msg_py_max_djinni = find_data_for_py_djinni()[1]
 
-    with sqlite3.connect('CONNECTION_DB_PY_DJINNI') as db_py_djinni:
-        cursor = db_py_djinni.cursor()
-
-        cursor.execute('CONNECTION_DB_PY_DJINNI')
-        request_py_start_djinni = cursor.fetchone()
-        msg_py_start_djinni = request_py_start_djinni[-1]
-
-        cursor.execute('CONNECTION_DB_PY_DJINNI')
-        request_py_max_djinni = cursor.fetchone()
-        msg_py_max_djinni = request_py_max_djinni[-1]
-
-    with sqlite3.connect('CONNECTION_DB_QA_DOU') as db_qa_dou:
-        cursor = db_qa_dou.cursor()
-
-        cursor.execute("SELECT salary_start_qa FROM salary_qa_dou")
-        request_qa_start_dou = cursor.fetchone()
-        msg_qa_start_dou = request_qa_start_dou[-1]
-
-        cursor.execute("SELECT salary_max_qa FROM salary_qa_dou")
-        request_qa_max_dou = cursor.fetchone()
-        msg_qa_max_dou = request_qa_max_dou[-1]
-
-    with sqlite3.connect('CONNECTION_DB_PY_DOU') as db_py_dou:
-        cursor = db_py_dou.cursor()
-
-        cursor.execute("SELECT salary_start_py FROM salary_python_dou")
-        request_py_start_dou = cursor.fetchone()
-        msg_py_start_dou = request_py_start_dou[-1]
-
-        cursor.execute("SELECT salary_max_py FROM salary_python_dou")
-        request_py_max_dou = cursor.fetchone()
-        msg_py_max_dou = request_py_max_dou[-1]
+    msg_py_start_dou = find_data_for_py_dou()[0]
+    msg_py_max_dou = find_data_for_py_dou()[1]
 
     job_amount_djinni_statistic_for_qa = responses_amount_djinni_for_qa = candidates_amount_djinni_qa = find_all_elements_for_qa_djinni()
 

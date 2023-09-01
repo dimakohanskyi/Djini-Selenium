@@ -177,5 +177,3 @@ def find_all_elements_for_py_dou():
 
 
 
-
-

@@ -15,6 +15,10 @@ and when a certain command is called, it sends the result into the chat.
 
 
 
+
+
+
+
 <h3>------------------------Installation----------------------</h3>
 
 <ol>
