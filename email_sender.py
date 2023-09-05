@@ -46,7 +46,7 @@ def email_message_sender():
     summary_salary_python_dev_djinni = (f"General salary statistics for Python Dev(Djinni):"
                                         f" ${msg_py_start_djinni} -- ${msg_py_max_djinni}")
 
-    with open("images_result_and_motivation_card/image.jpg", "rb") as image_file:
+    with open("img/image.jpg", "rb") as image_file:
         image_data = image_file.read()
         image_part = MIMEImage(image_data, name="image.jpg")
 

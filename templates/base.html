@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{% block title %}{% endblock %}</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+</head>
+<body>
+<div class="container">
+    <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
+        <div class="logo_head_logo">
+            <img src="https://i1.sndcdn.com/artworks-RWbimAOTSJFzOztu-hjI7tQ-t500x500.jpg" class="logo_head_logo">
+        </div>
+        <div class="all_buttons">
+          <button class="head_buttons" type="button"><a href="{{ url_for('home_page') }}" style="color: black;">Home</a></button>
+            <button class="head_buttons" type="button"><a href="{{ url_for('qasal_page') }}" style="color: black;">QA</a></button>
+            <button class="head_buttons" type="button"><a href="{{ url_for('pysal_page') }}" style="color: black;">Python</a></button>
+            <button class="head_buttons" type="button"><a href="{{ url_for('about_page') }}" style="color: black;">About</a></button>
+        </div>
+    </header>
+    {% block body %}{% endblock %}
+
+</div>
+</body>
+</html>

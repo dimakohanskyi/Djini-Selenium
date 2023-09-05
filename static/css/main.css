@@ -1,0 +1,90 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-image: url("https://wallpaper-mania.com/wp-content/uploads/2018/09/High_resolution_wallpaper_background_ID_77700342881.jpg");
+}
+
+
+.logo_head_logo {
+    border-radius: 30px;
+    width: 100px;
+    height: 100px;
+}
+
+.all_buttons{
+  top: 50px;
+  padding: 30px;
+
+}
+
+.head_buttons{
+    background-color: white;
+    border-radius: 20px;
+    width: 120px;
+    height: 45px;
+}
+
+.welcome_block {
+    text-align: center;
+    background-image: url("https://st4.depositphotos.com/1277251/38117/i/450/depositphotos_381177460-stock-photo-wooden-floor-smoke-light-dark.jpg");
+    background-size: cover;
+    padding: 60px;
+    border-radius: 120px;
+}
+
+.direction {
+    font-size: 120px;
+    color: blue;
+}
+
+
+.qa_block {
+    text-align: center;
+    background-image: url("https://st4.depositphotos.com/1277251/38117/i/450/depositphotos_381177460-stock-photo-wooden-floor-smoke-light-dark.jpg");
+    background-size: cover;
+    padding: 100px;
+    border-radius: 120px;
+}
+
+
+.py_block {
+    text-align: center;
+    background-image: url("https://st4.depositphotos.com/1277251/38117/i/450/depositphotos_381177460-stock-photo-wooden-floor-smoke-light-dark.jpg");
+    background-size: cover;
+    padding: 100px;
+    border-radius: 120px;
+}
+
+
+.title_name{
+    font-family: Arial, Helvetica, sans-serif;
+    color: #F8F8FF;
+}
+
+.lead{
+    font-family: Arial, Helvetica, sans-serif;
+    color: #F8F8FF;
+}
+
+.gachi_pic {
+    height: 360px;
+    width: 450px;
+}
+
+.body_about{
+    text-align: center;
+    background-image: url("https://st4.depositphotos.com/1277251/38117/i/450/depositphotos_381177460-stock-photo-wooden-floor-smoke-light-dark.jpg");
+    background-size: cover;
+    padding: 15px;
+    border-radius: 120px;
+
+}
+
+.foot_about {
+    font-weight: bold;
+    font-size: 20px;
+    color: black;
+
+}
+
+
+
